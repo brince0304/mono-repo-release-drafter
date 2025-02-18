@@ -1,0 +1,34 @@
+{
+  "extends": "@repo/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "baseUrl": ".",
+    "paths": {
+      "@repo/blog": ["../../apps/blog/src"],
+      "@repo/ui/*": ["../../packages/ui/src/components/*"],
+      "@repo/ui/ui/*": ["../../packages/ui/src/components/ui/*"],
+      "@repo/utils/*": ["../../packages/utils/src/*"],
+      "@repo/ui/libs/*": ["../../packages/ui/src/lib/*"],
+      "@/*": ["src/*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.js",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "next.config.js",
+    "next.config.mjs",
+    "postcss.config.cjs",
+    "../../packages/monaco/monaco-editor.d.ts",
+    "../../packages/monaco/monaco-vim.d.ts"
+  ],
+  "exclude": ["node_modules", ".next", "public", "playwright-report"]
+}

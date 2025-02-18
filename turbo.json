@@ -1,0 +1,31 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"],
+      "env": ["NOTION_TOKEN", "NOTION_DATABASE_ID", "NOTION_COMMENT_DATABASE_ID", "NOTION_OWNER_ID"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "dependsOn": ["^dev"]
+    },
+    "test:ci": {
+      "dependsOn": ["^test:ci"],
+      "inputs": [
+        "packages/*/src/**/*.test.*",
+        "packages/*/src/**/*.spec.*",
+        "packages/**/test/**/*.*",
+        "packages/**/__tests__/**/*.*",
+        "apps/*/src/**/*.test.*",
+        "apps/*/src/**/*.spec.*",
+        "apps/**/test/**/*.*",
+        "apps/**/__tests__/**/*.*"
+      ],
+      "outputs": []
+    }
+  }
+}

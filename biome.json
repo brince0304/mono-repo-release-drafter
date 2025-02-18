@@ -1,0 +1,70 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "error",
+        "noConsoleLog": {
+          "level": "warn"
+        },
+        "noDoubleEquals": "error"
+      },
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "error"
+      },
+      "complexity": {
+        "noUselessConstructor": "error",
+        "noForEach": "warn",
+        "noBannedTypes": "error"
+      },
+      "style": {
+        "noNonNullAssertion": "warn",
+        "useTemplate": "error",
+        "useConst": "error",
+        "noVar": "error"
+      },
+      "performance": {
+        "noDelete": "error"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "single",
+      "trailingCommas": "es5"
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignore": [
+      ".next/**/*",
+      "node_modules/**/*",
+      "build/**/*",
+      "dist/**/*",
+      "public/**/*",
+      "coverage/**/*",
+      "storybook-static/**/*",
+      ".storybook/**/*",
+      "**/*.stories.tsx"
+    ]
+  }
+}
