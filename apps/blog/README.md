@@ -20,7 +20,7 @@ You can start editing the page by modifying `ap2p/page.tsx`. The page auto-updat
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 2
-## Learn More
+## Learn More2
 
 To learn more about Next.js, take a look at the following resources:
 
