@@ -3,4 +3,4 @@ name-template: 'Release: apps-blog v$NEXT_PATCH_VERSION'
 tag-template: 'v$NEXT_PATCH_VERSION-apps-blog'
 tag-prefix: v
 include-paths:
-  - "apps/blog"
+  - "apps/blog/"

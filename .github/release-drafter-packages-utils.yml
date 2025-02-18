@@ -3,4 +3,4 @@ name-template: 'Release: packages-utils v$NEXT_PATCH_VERSION'
 tag-template: 'v$NEXT_PATCH_VERSION-packages-utils'
 tag-prefix: v
 include-paths:
-  - "packages/utils"
+  - "packages/utils/"
