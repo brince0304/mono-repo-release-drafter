@@ -11,7 +11,7 @@ yarn dev
 # or
 pnpm dev
 # or2
-bun dev2
+bun dev22
 ```
 3213212
 테스트 다섯 
