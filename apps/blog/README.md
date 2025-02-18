@@ -13,7 +13,7 @@ pnpm dev
 # or2
 bun dev2
 ```
-321321
+3213212
 테스트 다섯 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.2
 
