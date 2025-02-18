@@ -1,6 +1,6 @@
 _extends: mono-repo-release-drafter:.github/release-drafter.yml
-name-template: 'Release: apps-blog v$NEXT_PATCH_VERSION'
-tag-template: 'v$NEXT_PATCH_VERSION-apps-blog'
+name-template: 'Release: apps-blog v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION-apps-blog'
 tag-prefix: v
 include-paths:
   - "apps/blog"
