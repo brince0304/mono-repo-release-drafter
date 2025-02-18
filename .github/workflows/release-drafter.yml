@@ -12,7 +12,7 @@ jobs:
     name: '[apps/blog] Draft release'
     runs-on: ubuntu-20.04
     steps:
-      - uses: release-drafter/release-drafter@09c613e259eb8d4e7c81c2cb00618eb5fc4575a7 # v5.25.0
+      - uses: release-drafter/release-drafter@v5
         with:
           config-name: release-drafter-apps-blog.yml
         env:
@@ -21,7 +21,7 @@ jobs:
     name: '[packages/utils] Draft release'
     runs-on: ubuntu-20.04
     steps:
-      - uses: release-drafter/release-drafter@09c613e259eb8d4e7c81c2cb00618eb5fc4575a7 # v5.25.0
+      - uses: release-drafter/release-drafter@v5
         with:
           config-name: release-drafter-packages-utils.yml
         env:
