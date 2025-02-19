@@ -40,7 +40,7 @@ jobs:
           fi
 
           # 변경된 서비스 목록을 JSON 배열로 변환하여 출력
-          echo "matrix=$(echo "${CHANGED_SERVICES[@]}" | tr -d '\n' | xargs | jq -R -s -c 'split(" ") | select(length > 0)')" >> $GITHUB_OUTPUT
+          echo "matrix=$(printf '%s' "${CHANGED_SERVICES[@]}" | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
 
   # 변경된 웹앱에 대해 빌드 워크플로우 실행
   trigger_builds:
