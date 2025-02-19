@@ -69,7 +69,6 @@ jobs:
           
             echo "current directory: $(pwd)"
             echo "ls: $(ls)"
-          fi
 
       # build-dev-web.yml 워크플로우 트리거
       - name: Trigger workflow
