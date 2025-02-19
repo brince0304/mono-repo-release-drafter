@@ -53,6 +53,7 @@ jobs:
       # package.json에서 버전 정보 추출
       - name: Get package version
         id: package-version
+        working-directory: apps/${{ matrix.webview }}
         run: |
           VERSION=$(node -p "require(\`./apps/${{ matrix.webview }}/package.json\`).version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
