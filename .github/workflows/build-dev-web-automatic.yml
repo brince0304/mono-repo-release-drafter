@@ -54,7 +54,7 @@ jobs:
       - name: Get package version
         id: package-version
         run: |
-          VERSION=$(node -p "require('./apps/web/${{ matrix.webview }}/package.json').version")
+          VERSION=$(node -p "require('./apps/${{ matrix.webview }}/package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       # build-dev-web.yml 워크플로우 트리거
