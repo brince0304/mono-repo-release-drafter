@@ -40,7 +40,8 @@ jobs:
           fi
 
           # 변경된 서비스 목록을 JSON 배열로 변환하여 출력
-          echo "matrix=$(echo "${CHANGED_SERVICES[@]}" | tr -d '\n' | xargs | jq -R -s -c 'split(" ") | select(length > 0)')" >> $GITHUB_OUTPUT
+          SERVICES_JSON=$(printf '%s' "${CHANGED_SERVICES[@]}" | jq -R -s 'split(" ") | map(select(length > 0))')
+          echo "matrix=${SERVICES_JSON}" >> $GITHUB_OUTPUT
 
   # 변경된 웹앱에 대해 빌드 워크플로우 실행
   trigger_builds:
@@ -65,6 +66,7 @@ jobs:
       - name: Get package version
         id: package-version
         run: |
+          WEBVIEW=$(echo "${{ matrix.webview }}" | tr -d '[:space:]')
           if [ -d "apps/${{ matrix.webview }}" ]; then
             cd apps/${{ matrix.webview }}
             VERSION=$(node -p "require('./package.json').version")
