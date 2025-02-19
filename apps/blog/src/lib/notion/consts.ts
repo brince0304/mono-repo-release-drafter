@@ -19,5 +19,5 @@ export const NOTION_PROPERTY = {
 
 export const POST_CATEGORY = {
   TECH: 'Tech2',
-  DAILY: 'Daily2',
+  DAILY: 'Daily22',
 } as const;
