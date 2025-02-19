@@ -28,20 +28,22 @@ jobs:
         run: |
           git fetch origin main
           CHANGED_SERVICES=()
-
-          # blog 서비스의 변경사항 확인
+      
           if git diff --name-only HEAD^ HEAD | grep -q "apps/blog/"; then
             CHANGED_SERVICES+=("blog")
           fi
-          
-          # utils 패키지의 변경사항 확인  
+      
           if git diff --name-only HEAD^ HEAD | grep -q "packages/utils/"; then
             CHANGED_SERVICES+=("utils")
           fi
-
-          # 변경된 서비스 목록을 JSON 배열로 변환하여 출력
-          SERVICES_JSON=$(printf '%s' "${CHANGED_SERVICES[@]}" | jq -R -s 'split(" ") | map(select(length > 0))')
-          echo "matrix=${SERVICES_JSON}" >> $GITHUB_OUTPUT
+      
+          # JSON 배열 생성 부분 수정
+          if [ ${#CHANGED_SERVICES[@]} -eq 0 ]; then
+            echo "matrix=[]" >> $GITHUB_OUTPUT
+          else
+            SERVICES_JSON=$(printf '%s\n' "${CHANGED_SERVICES[@]}" | jq -R . | jq -s .)
+            echo "matrix=${SERVICES_JSON}" >> $GITHUB_OUTPUT
+          fi
 
   # 변경된 웹앱에 대해 빌드 워크플로우 실행
   trigger_builds:
