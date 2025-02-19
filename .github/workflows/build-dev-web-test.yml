@@ -1,0 +1,45 @@
+name: build-production-web
+
+on:
+  workflow_dispatch:
+    inputs:
+      webview_name:
+        type: choice
+        description: 'Target Webview Service'
+        required: true
+        options:
+          - 'apps-blog'
+          - 'packages-utils'
+      release_version:
+        type: string
+        required: true
+        description: 'Release Version'
+        default: 'ex) 1.0.0'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./apps/web/${{ inputs.webview_name }}
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Print inputs for testing
+        run: |
+          echo "Selected webview: ${{ inputs.webview_name }}"
+          echo "Release version: ${{ inputs.release_version }}"

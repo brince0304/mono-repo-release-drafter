@@ -1,0 +1,74 @@
+# 개발 환경의 웹 빌드를 자동화하는 워크플로우
+name: Build Development Web Automatic
+
+# main 브랜치에 push가 발생하고, 특정 웹앱 경로가 변경되었을 때 또는 수동 실행 시 트리거
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/blog/**'
+
+jobs:
+  # 변경된 웹앱을 감지하는 작업
+  detect_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      # 코드 체크아웃 (최근 2개의 커밋만)
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      # 변경된 파일을 확인하고 빌드할 서비스 목록 생성
+      - name: Check changed files
+        id: set-matrix
+        run: |
+          git fetch origin main
+
+          CHANGED_SERVICES=()
+
+          # blog 서비스의 변경사항 확인
+          if git diff --name-only HEAD^ HEAD | grep -q "apps/blog/"; then
+            CHANGED_SERVICES+=("blog")
+          fi
+
+          # 변경된 서비스 목록을 JSON 배열로 변환하여 출력
+          echo "matrix=$(echo "${CHANGED_SERVICES[@]}" | jq -R -s -c 'split(" ") | select(length > 0)')" >> $GITHUB_OUTPUT
+
+  # 변경된 웹앱에 대해 빌드 워크플로우 실행
+  trigger_builds:
+    needs: detect_changes
+    # 변경된 서비스가 있을 때만 실행
+    if: needs.detect_changes.outputs.matrix != '[]' && needs.detect_changes.outputs.matrix != ''
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        webview: ${{ fromJson(needs.detect_changes.outputs.matrix) }}
+    steps:
+      # 코드 체크아웃
+      - uses: actions/checkout@v3
+
+      # package.json에서 버전 정보 추출
+      - name: Get package version
+        id: package-version
+        run: |
+          VERSION=$(node -p "require('./apps/web/${{ matrix.webview }}/package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      # build-dev-web.yml 워크플로우 트리거
+      - name: Trigger workflow
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'build-dev-web-test.yml',
+              ref: 'main',
+              inputs: {
+                webview_name: '${{ matrix.webview }}',
+                release_version: '${{ steps.package-version.outputs.version }}'
+              }
+            })
