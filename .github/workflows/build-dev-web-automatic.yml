@@ -66,6 +66,7 @@ jobs:
             cd apps/${{ matrix.webview }}
             VERSION=$(node -p "require('./package.json').version")
             echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
             echo "current directory: $(pwd)"
             echo "ls: $(ls)"
 
@@ -74,16 +75,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            echo "Triggering build-dev-web.yml workflow"
-            echo "webview: ${{ matrix.webview }} | tr -d '\n'"
-            echo "version: ${{ steps.package-version.outputs.version }} | tr -d '\n'"
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'build-dev-web-test.yml',
               ref: 'main',
               inputs: {
-                webview_name: '${{ webview }}',
-                release_version: '${{ version }}'
+                webview_name: '${{ matrix.webview }}',
+                release_version: '${{ steps.package-version.outputs.version }}'
               }
             })
