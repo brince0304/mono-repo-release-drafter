@@ -55,13 +55,11 @@ jobs:
       # 코드 체크아웃
       - uses: actions/checkout@v3
 
-      # package.json에서 버전 정보 추출# Node.js 설치
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
 
-      # package.json에서 버전 정보 추출
       - name: Get package version
         id: package-version
         run: |
