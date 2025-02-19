@@ -65,17 +65,12 @@ jobs:
       - name: Get package version
         id: package-version
         run: |
-          if [ -d "apps/${{ matrix.webview }}" ]; then
             cd apps/${{ matrix.webview }}
             VERSION=$(node -p "require('./package.json').version")
             echo "version=$VERSION" >> $GITHUB_OUTPUT
-          else
-            echo "Directory apps/${{ matrix.webview }} does not exist"
+          
             echo "current directory: $(pwd)"
             echo "ls: $(ls)"
-            cd apps/blog
-            echo "ls: $(ls)"
-            exit 1
           fi
 
       # build-dev-web.yml 워크플로우 트리거
