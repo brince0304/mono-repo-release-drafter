@@ -8,8 +8,8 @@ on:
         description: 'Target Webview Service'
         required: true
         options:
-          - 'apps-blog'
-          - 'packages-utils'
+          - 'blog'
+          - 'utils'
       release_version:
         type: string
         required: true
